@@ -55,10 +55,10 @@ class TodoTest < Test::Unit::TestCase
    assert_equal("Which todo have you finished?", $output.last)
   end
 
-  #def test_mark_todo_changes_todo
-  #  todo_setup # Given
-  #  $input.push('1')
-  #  @todo.mark_todo
-  #  assert_equal("finish homework,yes\n", @todo.todos[0].to_s)
-  #end
+  def test_mark_todo_changes_todo
+   todo_setup # Given
+   $input.push('1')
+   @todo.mark_todo
+   assert_equal("finish homework,yes\n", @todo.todos[0].to_s)
+  end
 end

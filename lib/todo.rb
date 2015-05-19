@@ -49,14 +49,15 @@ class Todo
 
   def add_todo
     puts "Name of Todo > "
-    ender = "no\n"
-    new_todo = get_input
-    ender = "#{new_todo},no\n"
-    @todos << ender
+    user_entry = get_input
+    new_todo = "#{user_entry},no\n"
+    @todos << new_todo
+    save!
   end # add_todo method
 
   def mark_todo
     puts "Which todo have you finished?"
+    @todos[get_input.to_i - 1]['completed'] = "yes"
   end # mark_todo method
 
   private
