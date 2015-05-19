@@ -55,6 +55,10 @@ class Todo
     @todos << ender
   end # add_todo method
 
+  def mark_todo
+    puts "Which todo have you finished?"
+  end # mark_todo method
+
   private
   def get_input
     gets.chomp

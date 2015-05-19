@@ -49,11 +49,11 @@ class TodoTest < Test::Unit::TestCase
    assert_equal("make this test pass,no\n", @todo.todos[1].to_s)
   end
 
-  #def test_mark_todo_prints_prompt
-  #  todo_setup # Given
-  #  @todo.mark_todo
-  #  assert_equal("Which todo have you finished?", $output.last)
-  #end
+  def test_mark_todo_prints_prompt
+   todo_setup # Given
+   @todo.mark_todo
+   assert_equal("Which todo have you finished?", $output.last)
+  end
 
   #def test_mark_todo_changes_todo
   #  todo_setup # Given
