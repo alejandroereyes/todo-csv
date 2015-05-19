@@ -58,6 +58,7 @@ class Todo
   def mark_todo
     puts "Which todo have you finished?"
     @todos[get_input.to_i - 1]['completed'] = "yes"
+    save!
   end # mark_todo method
 
   private
