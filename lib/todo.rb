@@ -18,7 +18,8 @@ class Todo
 
       puts
       puts "What would you like to do?"
-      puts "1) Exit 2) Add Todo 3) Mark Todo As Complete 4) Edit Todo"
+      puts "1) Exit 2) Add Todo 3) Mark Todo As Complete"
+      puts "       4) Edit Todo 5) Delete Todo"
       print " > "
       action = gets.chomp.to_i
       case action
@@ -26,6 +27,7 @@ class Todo
       when 2 then add_todo
       when 3 then mark_todo
       when 4 then edit_todo
+      when 5 then delete_todo
       else
         puts "\a"
         puts "Not a valid choice"
@@ -77,7 +79,7 @@ class Todo
     puts ""
     puts "Enter your update to this item :"
     update_from_user = get_input
-
+    # from unfinished list
     if user_choice == 1
       # look at every unfinished item
       no_group = @todos.select { |row| row['completed'] == "no" }
@@ -89,12 +91,13 @@ class Todo
           row['name'] = update_from_user
         end # cond
       end # each loop
+    # from completed list
     elsif user_choice == 2
-       # look at every completed item
+       # look at every completed item that is completed
       yes_group = @todos.select { |row| row['completed'] == "yes" }
-      # get item name value from no-list
+      # get item name value from yes-list
       yes_item_to_update = yes_group[element_num]['name']
-      # look for a match in DB and update
+      # look for a match in DB and delete
       @todos.each do |row|
         if row['name'] == yes_item_to_update
           row['name'] = update_from_user
@@ -106,6 +109,38 @@ class Todo
     end # user_choice cond
     save!
   end # edit_todo method
+
+  def delete_todo
+    puts ""
+    print "From which to list?  1) Unfinished or 2) Completed item : "
+    list_choice = get_input.to_i
+    puts ""
+    print "Select which item to delete: "
+    element_num = get_input.to_i - 1
+    # from unfinished list
+    if list_choice == 1
+      # look at every unfinished item
+      no_group = @todos.select { |row| row['completed'] == "no" }
+      # get item name value from no-list
+      no_item_to_delete = no_group[element_num]['name']
+      # look for a match in DB and update
+      @todos.delete_if { |row| row['name'] == no_item_to_delete}
+    # from completed list
+    elsif list_choice == 2
+       # look at every completed item
+      yes_group = @todos.select { |row| row['completed'] == "yes" }
+      # get item name value from yes-list
+      yes_item_to_delete = yes_group[element_num]['name']
+      # look for a match in DB and update
+      @todos.delete_if { |row| row['name'] == yes_item_to_delete}
+    else # invalid entry
+      puts "!!  Invalid Entry !!"
+      delete_todo
+    end # user_choice cond
+    save!
+
+
+  end # delete_todo method
 
   private
   def get_input
