@@ -61,4 +61,11 @@ class TodoTest < Test::Unit::TestCase
    @todo.mark_todo
    assert_equal("finish homework,yes\n", @todo.todos[0].to_s)
   end
+
+  # def test_edit_todo_method
+    # todo_setup # Given
+    # $input.push("EAT CRONUTS!") # When
+    # @todo.edit_todo
+    # assert_equal("EAT CRONUTS!,no\n", @todo.todos[0].to_s) # Then
+  # end
 end

@@ -18,13 +18,14 @@ class Todo
 
       puts
       puts "What would you like to do?"
-      puts "1) Exit 2) Add Todo 3) Mark Todo As Complete"
+      puts "1) Exit 2) Add Todo 3) Mark Todo As Complete 4) Edit Todo"
       print " > "
       action = gets.chomp.to_i
       case action
       when 1 then exit
       when 2 then add_todo
       when 3 then mark_todo
+      when 4 then edit_todo
       else
         puts "\a"
         puts "Not a valid choice"
@@ -65,6 +66,46 @@ class Todo
     @todos[get_input.to_i - 1]['completed'] = "yes"
     save!
   end # mark_todo method
+
+  def edit_todo
+    puts ""
+    print "Which to adjust?  1) Unfinished or 2) Completed item : "
+    user_choice = get_input.to_i
+    puts ""
+    print "Select which item to edit: "
+    element_num = get_input.to_i - 1
+    puts ""
+    puts "Enter your update to this item :"
+    update_from_user = get_input
+
+    if user_choice == 1
+      # look at every unfinished item
+      no_group = @todos.select { |row| row['completed'] == "no" }
+      # get item name value from no-list
+      no_item_to_update = no_group[element_num]['name']
+      # look for a match in DB and update
+      @todos.each do |row|
+        if row['name'] == no_item_to_update
+          row['name'] = update_from_user
+        end # cond
+      end # each loop
+    elsif user_choice == 2
+       # look at every completed item
+      yes_group = @todos.select { |row| row['completed'] == "yes" }
+      # get item name value from no-list
+      yes_item_to_update = yes_group[element_num]['name']
+      # look for a match in DB and update
+      @todos.each do |row|
+        if row['name'] == yes_item_to_update
+          row['name'] = update_from_user
+        end # cond
+      end # each loop
+    else # invalid entry
+      puts "!!  Invalid Entry !!"
+      edit_todo
+    end # user_choice cond
+    save!
+  end # edit_todo method
 
   private
   def get_input
