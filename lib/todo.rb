@@ -44,14 +44,19 @@ class Todo
       counter += 1
       puts "#{counter}) #{task['name']}"
     end
+
     puts "Completed"
+    donzo = @todos.select { |row| row['completed'] == "yes" }
+    counter = 0
+    donzo.each do |task|
+      counter += 1
+      puts "#{counter}) #{task['name']}"
+    end
   end # view_todos method
 
   def add_todo
     puts "Name of Todo > "
-    user_entry = get_input
-    new_todo = "#{user_entry},no\n"
-    @todos << new_todo
+    @todos << [get_input, "no"]
     save!
   end # add_todo method
 
